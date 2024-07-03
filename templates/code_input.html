@@ -13,32 +13,37 @@
       min-width: calc({{ max_chars }}ch + 4 * 2em);
     }
 </style>
-<form>
+<form class = "all">
     <textarea
       class="code"
       name="code"
       placeholder="Paste your Python code here"
+      style="height: 300px;"
     >{{ code }}
     </textarea>
     <div class="controls">
         <button formmethod="post" formaction="{{ url_for('reset_session') }}">
           Reset Session ♻️
         </button>
+
         <button formmethod="post" formaction="{{ url_for('save_code') }}">
           Save Code 💾
         </button>
+
         <button formmethod="post" formaction="{{ url_for('save_style') }}">
             Next ➡️
         </button>
+
         <button formmethod="get" formaction="{{ url_for('tutorial_raw') }}">
             Tutorial ❓
         </button>
+
+        <button formmethod="post" formaction="{{ url_for('load_github_file') }}" type="submit">     
+            Load from GitHub 🚀
+        </button>
+
+        <input type="url" name="github_url" placeholder="Enter GitHub file URL">
       </div>
       
 </form>
-<form method="post" action="{{ url_for('load_github_file') }}">
-    <input type="url" name="github_url" placeholder="Enter GitHub file URL" required>
-    <button type="submit">Load from GitHub 🚀</button>
-</form>
-
 {% endblock content %}

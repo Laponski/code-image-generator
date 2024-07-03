@@ -22,11 +22,16 @@
         }
         .back_link {
             margin: 1em 0;
+            font-size: 20px;
+        }
+        .back_button {
+            margin: 1em 0;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
         }
+
     </style>
 </head>
 <body>
@@ -50,9 +55,10 @@
     
     <h2>Explanation:</h2>
     <p>In the example above, we replaced <code>github.com</code> with <code>raw.githubusercontent.com</code> and removed <code>/blob/</code> from the path to get the raw URL.</p>
+    
     <form>
-        <div>
-            <button formmethod="get" formaction="{{ url_for('code') }}">
+        <div class="back_button">
+            <button formmethod="get" formaction="{{ url_for('code') }}" class="back_link">
                 Back to Code Input ↩️
             </button>
         </div>

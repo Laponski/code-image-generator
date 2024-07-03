@@ -20,6 +20,13 @@
             border-radius: 3px;
             font-family: "Courier New", Courier, monospace;
         }
+        .back_link {
+            margin: 1em 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
     </style>
 </head>
 <body>
@@ -43,6 +50,8 @@
     
     <h2>Explanation:</h2>
     <p>In the example above, we replaced <code>github.com</code> with <code>raw.githubusercontent.com</code> and removed <code>/blob/</code> from the path to get the raw URL.</p>
+    
+    <a href="{{ url_for('code') }}" class="back_link">Back to Code Input ↩️</a>
     
 </body>
 </html>

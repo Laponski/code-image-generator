@@ -50,8 +50,13 @@
     
     <h2>Explanation:</h2>
     <p>In the example above, we replaced <code>github.com</code> with <code>raw.githubusercontent.com</code> and removed <code>/blob/</code> from the path to get the raw URL.</p>
-    
-    <a href="{{ url_for('code') }}" class="back_link">Back to Code Input ↩️</a>
+    <form>
+        <div>
+            <button formmethod="get" formaction="{{ url_for('code') }}">
+                Back to Code Input ↩️
+            </button>
+        </div>
+    </form>
     
 </body>
 </html>

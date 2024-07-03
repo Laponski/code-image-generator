@@ -97,6 +97,9 @@ def load_github_file():
         flash(f"Failed to load the file: {e}", "error")
     return redirect(url_for("code"))
 
+@app.route("/tutorial_raw", methods=["GET"])
+def tutorial_raw():
+    return render_template("tut.html")
 if __name__ == '__main__':
     app.run(debug=True)
 

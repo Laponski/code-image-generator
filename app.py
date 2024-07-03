@@ -83,18 +83,19 @@ def image():
 @app.route("/load_github_file", methods=["POST"])
 def load_github_file():
     github_url = request.form.get("github_url")
-    if not github_url:
-        flash("No URL provided", "error")
-        return redirect(url_for("code"))
-
-    try:
-        response = requests.get(github_url)
-        response.raise_for_status()
-        session["code"] = response.text
-        flash("File loaded successfully!", "success")
-    
-    except requests.RequestException as e:
-        flash(f"Failed to load the file: {e}", "error")
+    if github_url:
+        if "github.com" in github_url and "/blob/" in github_url:
+            flash("Please provide a raw GitHub URL. You can follow the tutorial to convert it.", "error")
+        else:
+            try:
+                response = requests.get(github_url)
+                response.raise_for_status()
+                session["code"] = response.text
+                flash("Code loaded successfully from GitHub!", "success")
+            except requests.RequestException as e:
+                flash(f"Failed to load the file: {e}", "error")
+    else:
+        flash("GitHub URL cannot be empty.", "error")
     return redirect(url_for("code"))
 
 @app.route("/tutorial_raw", methods=["GET"])

@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.secret_key = "c6298e4547281ec26fff3c05490ea15fcbbf8bb046800ea32a21a0931d057398"
 
 
-PLACEHOLDER_CODE = "print('Hello, World!')"
+PLACEHOLDER_CODE = ""
 DEFAULT_STYLE = "github-dark"
 NO_CODE_FALLBACK = "# No Code Entered"
 
@@ -110,9 +110,6 @@ def load_github_file():
         flash("GitHub URL cannot be empty.", "danger")
     return redirect(url_for("code"))
 
-@app.route("/tutorial_raw", methods=["GET"])
-def tutorial_raw():
-    return render_template("tut.html")
 if __name__ == '__main__':
     app.run(debug=True)
 

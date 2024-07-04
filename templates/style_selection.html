@@ -22,7 +22,7 @@
   });
 </script>
 <form method="post" action="{{ url_for('save_style') }}">
-  <div class="controls">
+  <div>
     <select name="style">
       {% for style_name in all_styles %}
         <option value="{{ style_name }}">{{ style_name }}</option>
@@ -32,11 +32,11 @@
   <div class="code">
     {{ highlighted_code | safe }}
   </div>
-  <div class="controls">
-    <button formmethod="get" formaction="{{ url_for('code') }}">
+  <div>
+    <button formmethod="get" formaction="{{ url_for('code') }}" class="btn btn-primary">
       ⬅️ Back
     </button>
-        <button formmethod="get" formaction="{{ url_for('image') }}">
+        <button formmethod="get" formaction="{{ url_for('image') }}" class="btn btn-primary">
       Create Image 📸
     </button>
   </div>

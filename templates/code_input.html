@@ -12,38 +12,38 @@
       min-height: calc({{ num_lines }}em * 1.5 + 2 * 1em);
       min-width: calc({{ max_chars }}ch + 4 * 2em);
     }
+
+    .form-control {
+            resize: none;
+    }
 </style>
 <form>
-    <textarea
-      class="code"
-      name="code"
-      placeholder="Paste your Python code here"
-      style="height: 300px;"
-    >{{ code }}
-    </textarea>
-    <div>
-        <button formmethod="post" formaction="{{ url_for('reset_session') }}" class="btn btn-primary">
-          Reset Session ♻️
-        </button>
-
-        <button formmethod="post" formaction="{{ url_for('save_code') }}" class="btn btn-primary"> 
-          Save Code 💾
-        </button>
-
-        <button formmethod="post" formaction="{{ url_for('save_style') }}" class="btn btn-primary">
-            Next ➡️
-        </button>
-
-        <button formmethod="get" formaction="{{ url_for('tutorial_raw') }}" class="btn btn-primary">
-            Tutorial ❓
-        </button>
-
-        <button formmethod="post" formaction="{{ url_for('load_github_file') }}" type="submit" class="btn btn-primary">     
-            Load from GitHub 🚀
-        </button>
-
-        <input type="url" name="github_url" placeholder="Enter GitHub file URL">
+      <div class="d-flex align-items-center justify-content-between" style="position: relative;">
+        <input type="url" class="form-control" name="github_url" style="width: 464px; height: 48px; text-align: left;" placeholder="https://github.com/...">
+        <div class="btn-container" style="position: absolute; top: 0; right: 0;">
+          <button formmethod="post" formaction="{{ url_for('load_github_file') }}" type="submit" class="btn btn-outline-primary" style="text-align: right;">     
+            Import Code
+          </button>
+        </div>
       </div>
+
+    <div class="mb-3" style="margin-top: 8px;">
+      <textarea class="form-control" name="code" placeholder="Import your code from GitHub, or past it here..." id="floatingTextarea" style="height: 475px">{{ code }}</textarea>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="align-self-start">
+        <button formmethod="post" formaction="{{ url_for('reset_session') }}" class="btn btn-outline-primary btn-sm">
+          Reset
+        </button>
+      </div>
+    
+      <div class="align-self-start">
+        <button formmethod="post" formaction="{{ url_for('save_style') }}" class="btn btn-primary">
+          Next
+        </button>
+      </div>
+    </div>
       
 </form>
 {% endblock content %}

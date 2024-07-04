@@ -85,10 +85,11 @@ def load_github_file():
     github_url = request.form.get("github_url")
     if github_url:
         if "github.com" in github_url and "/blob/" in github_url:
-            flash("Please provide a raw GitHub URL. You can follow the tutorial to convert it.", "error")
-        else:
+            raw_url = github_url.replace("github.com","raw.githubusercontent.com").replace("/blob/", "/")
+            flash("URL successfully changed!", "success")
+        
             try:
-                response = requests.get(github_url)
+                response = requests.get(raw_url)
                 response.raise_for_status()
                 session["code"] = response.text
                 flash("Code loaded successfully from GitHub!", "success")

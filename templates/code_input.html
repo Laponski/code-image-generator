@@ -13,7 +13,7 @@
       min-width: calc({{ max_chars }}ch + 4 * 2em);
     }
 </style>
-<form class = "all">
+<form>
     <textarea
       class="code"
       name="code"
@@ -21,24 +21,24 @@
       style="height: 300px;"
     >{{ code }}
     </textarea>
-    <div class="controls">
-        <button formmethod="post" formaction="{{ url_for('reset_session') }}">
+    <div>
+        <button formmethod="post" formaction="{{ url_for('reset_session') }}" class="btn btn-primary">
           Reset Session ♻️
         </button>
 
-        <button formmethod="post" formaction="{{ url_for('save_code') }}">
+        <button formmethod="post" formaction="{{ url_for('save_code') }}" class="btn btn-primary"> 
           Save Code 💾
         </button>
 
-        <button formmethod="post" formaction="{{ url_for('save_style') }}">
+        <button formmethod="post" formaction="{{ url_for('save_style') }}" class="btn btn-primary">
             Next ➡️
         </button>
 
-        <button formmethod="get" formaction="{{ url_for('tutorial_raw') }}">
+        <button formmethod="get" formaction="{{ url_for('tutorial_raw') }}" class="btn btn-primary">
             Tutorial ❓
         </button>
 
-        <button formmethod="post" formaction="{{ url_for('load_github_file') }}" type="submit">     
+        <button formmethod="post" formaction="{{ url_for('load_github_file') }}" type="submit" class="btn btn-primary">     
             Load from GitHub 🚀
         </button>
 

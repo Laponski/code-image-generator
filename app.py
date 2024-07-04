@@ -84,9 +84,10 @@ def image():
 def load_github_file():
     github_url = request.form.get("github_url")
     if github_url:
+
         if "github.com" in github_url and "/blob/" in github_url:
             raw_url = github_url.replace("github.com","raw.githubusercontent.com").replace("/blob/", "/")
-            flash("URL successfully changed!", "success")
+            flash("URL successfully changed into raw!", "success")
         
             try:
                 response = requests.get(raw_url)
@@ -94,9 +95,19 @@ def load_github_file():
                 session["code"] = response.text
                 flash("Code loaded successfully from GitHub!", "success")
             except requests.RequestException as e:
-                flash(f"Failed to load the file: {e}", "error")
+                flash(f"Failed to load the file: {e}", "danger")
+        else:
+
+            try:
+                response = requests.get(github_url)
+                response.raise_for_status()
+                session["code"] = response.text
+                flash("Code loaded successfully from GitHub!", "success")
+            except requests.RequestException as e:
+                flash(f"Failed to load the file: {e}", "danger")
+    
     else:
-        flash("GitHub URL cannot be empty.", "error")
+        flash("GitHub URL cannot be empty.", "danger")
     return redirect(url_for("code"))
 
 @app.route("/tutorial_raw", methods=["GET"])

@@ -13,6 +13,7 @@
   .code {
     background-color: {{ style_bg_color }};
   }
+
 </style>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -22,23 +23,35 @@
   });
 </script>
 <form method="post" action="{{ url_for('save_style') }}">
-  <div>
-    <select name="style">
+  <div class="d-flex justify-content-end">
+    <select name="style" class="form-select border border-light-subtle" style="width: 164px; color:#6c757d;">
+      <option value="" disabled selected>Select style</option>
       {% for style_name in all_styles %}
         <option value="{{ style_name }}">{{ style_name }}</option>
       {% endfor %}
     </select>
   </div>
-  <div class="code">
-    {{ highlighted_code | safe }}
+
+  <div class="rounded-2 code" style="height: 475px; overflow-y: auto; margin-top: 8px;">
+    <div>
+      {{ highlighted_code | safe }}
+    </div>
   </div>
-  <div>
-    <button formmethod="get" formaction="{{ url_for('code') }}" class="btn btn-primary">
-      ⬅️ Back
-    </button>
-        <button formmethod="get" formaction="{{ url_for('image') }}" class="btn btn-primary">
-      Create Image 📸
-    </button>
+
+  <div class="d-flex align-items-center justify-content-between position-relative" style="margin-top: 8px;">
+
+    <div class="align-self-start">
+      <button formmethod="get" formaction="{{ url_for('code') }}" class="btn btn-outline-primary btn-sm">
+        Back
+      </button>
+    </div>
+
+    <div class="align-self-start">
+      <button formmethod="get" formaction="{{ url_for('image') }}" class="btn btn-primary">
+        Generate
+      </button>
+    </div>  
+
   </div>
 </form>
 {% endblock content %}

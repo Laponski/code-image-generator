@@ -87,24 +87,21 @@ def load_github_file():
 
         if "github.com" in github_url and "/blob/" in github_url:
             raw_url = github_url.replace("github.com","raw.githubusercontent.com").replace("/blob/", "/")
-            flash("URL successfully changed into raw!", "success")
         
             try:
                 response = requests.get(raw_url)
                 response.raise_for_status()
                 session["code"] = response.text
-                flash("Code loaded successfully from GitHub!", "success")
             except requests.RequestException as e:
-                flash(f"Failed to load the file: {e}", "danger")
+                flash("Something went wrong!", "danger")
         else:
 
             try:
                 response = requests.get(github_url)
                 response.raise_for_status()
                 session["code"] = response.text
-                flash("Code loaded successfully from GitHub!", "success")
             except requests.RequestException as e:
-                flash(f"Failed to load the file: {e}", "danger")
+                flash("Something went wrong!", "danger")
     
     else:
         flash("GitHub URL cannot be empty.", "danger")

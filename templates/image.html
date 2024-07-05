@@ -8,24 +8,30 @@
 
 {% block content %}
 <form>
+  <div>
+    <button formmethod="get" formaction="{{ url_for('code') }}" class="btn btn-outline-primary btn-sm">
+      Start over
+    </button>
+  </div>  
+
   {% if image_b64 %}
-    <div class="code-picture">
+    <div class="code-picture" style="margin-top: 8px; max-width: 100%; overflow: hidden;">
       <img
         src="data:image/png;base64,{{ image_b64 | safe }}"
         alt="Code Image"
+        class="img-fluid" 
+        style="max-width: 100%;"
       />
     </div>
-    <a
-      href="data:image/png;base64,{{ image_b64 | safe }}"
-      download="Your_CodeImage.png"
-    >
-      Download Your Code Image ⤵️
-    </a>
+
+    <div class="text-end" style="margin-top: 8px;">
+      <a href="data:image/png;base64,{{ image_b64 | safe }}" download="Your_CodeImage.png">
+        <button class="btn btn-primary">
+          Download
+        </button>  
+      </a>
+    </div>
   {% endif %}
-  <div class="controls">
-    <button formmethod="get" formaction="{{ url_for('code') }}">
-      🔄 Back to Start
-    </button>
-  </div>
+
 </form>
 {% endblock content %}

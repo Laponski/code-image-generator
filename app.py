@@ -93,7 +93,7 @@ def load_github_file():
                 response.raise_for_status()
                 session["code"] = response.text
             except requests.RequestException as e:
-                flash("Something went wrong!", "danger")
+                flash("Failed to load the file", "danger")
         else:
 
             try:
@@ -101,7 +101,7 @@ def load_github_file():
                 response.raise_for_status()
                 session["code"] = response.text
             except requests.RequestException as e:
-                flash("Something went wrong!", "danger")
+                flash("Failed to load the file", "danger")
     
     else:
         flash("GitHub URL cannot be empty.", "danger")

@@ -13,6 +13,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     
   </head>
+  
+  <div class="position-absolute top-0 end-0" style="margin-top: 43px;">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show d-flex justify-content-between align-items-center" style="margin-right: 19px;" role="alert">
+                {{ message }} 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+        {% endif %}
+      {% endwith %}  
+  </div>
+
   <div style="width: 620px; margin: auto; margin-top: 91px;">
     <body>
       <h1 style="text-align: left; font-size: 48px; font-family: 'Jost', sans-serif;">
@@ -22,15 +36,7 @@
         Show off your code with beautiful images
       </p>
 
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          <ul >
-            {% for category, message in messages %}
-              <li class="alert alert-{{ category }}" role="alert">{{ message }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      {% endwith %}
+
       
       <main>
         {% block content %}
@@ -39,5 +45,6 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
   </div>
+
 </html>
 

@@ -67,19 +67,20 @@ def logout():
 
 @app.route("/", methods=["GET"])
 def code():
-
-    return render_template("prova.html", session=session.get('user'), pretty=json.dumps(session.get('user'), indent=4))
-
-    if session.get("code") is None:
-        session["code"] = PLACEHOLDER_CODE
-    lines = session["code"].split("\n")
-    context = {
-        "message": "Paste Your Python Code 🐍",
-        "code": session["code"],
-        "num_lines": len(lines),
-        "max_chars": len(max(lines, key=len)),
-    }
-    return render_template("code_input.html", **context)
+    user = session.get("user")
+    if user:
+        if session.get("code") is None:
+            session["code"] = PLACEHOLDER_CODE
+        lines = session["code"].split("\n")
+        context = {
+            "message": "Paste Your Python Code 🐍",
+            "code": session["code"],
+            "num_lines": len(lines),
+            "max_chars": len(max(lines, key=len)),
+        }
+        return render_template("code_input.html", **context)
+    else:
+        return render_template("form.html", session=session.get('user'), pretty=json.dumps(session.get('user'), indent=4))
 
 @app.route("/save_code", methods=["POST"])
 def save_code():

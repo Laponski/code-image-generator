@@ -4,12 +4,34 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import Python3Lexer
 from pygments.styles import get_all_styles
 from utils import take_screenshot_from_url
+from os import environ as env
+from urllib.parse import quote_plus, urlencode
+from authlib.integrations.flask_client import OAuth
+from dotenv import find_dotenv, load_dotenv
+
 
 import base64
 import requests
+import json
+
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
 
 app = Flask(__name__)
-app.secret_key = "c6298e4547281ec26fff3c05490ea15fcbbf8bb046800ea32a21a0931d057398"
+app.secret_key = env.get("APP_SECRET_KEY")
+
+oauth = OAuth(app)
+
+oauth.register(
+    "auth0",
+    client_id=env.get("AUTH0_CLIENT_ID"),
+    client_secret=env.get("AUTH0_CLIENT_SECRET"),
+    client_kwargs={
+        "scope": "openid profile email",
+    },
+    server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
+)
 
 
 PLACEHOLDER_CODE = ""
@@ -67,13 +89,16 @@ def save_style():
 
 @app.route("/image", methods=["GET"])
 def image():
+    
     session_data = {
         "name": app.config["SESSION_COOKIE_NAME"],
         "value": request.cookies.get(app.config["SESSION_COOKIE_NAME"]),
         "url": request.host_url,
     }
+
     target_url = request.host_url + url_for("style")
     image_bytes = take_screenshot_from_url(target_url, session_data)
+    
     context = {
         "message": "Done! 🎉",
         "image_b64": base64.b64encode(image_bytes).decode("utf-8"),

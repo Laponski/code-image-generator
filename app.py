@@ -69,7 +69,6 @@ def callback():
     
     if email:
         user_info_dict[email] = userinfo
-        save_into_csv()
     else:
        None
     return redirect("/")
@@ -190,11 +189,16 @@ def load_github_file():
 def data():
     return jsonify(user_info_dict), 200
 
-@app.route('/delete', methods=['DELETE'])
+@app.route('/clear', methods=['DELETE'])
 def delete():
     user_info_dict.clear()
     save_into_csv()
     return jsonify({"message": "All user information deleted."}), 200
+
+@app.route('/export', methods=["GET"])
+def export():
+    save_into_csv()
+    return jsonify({"message": "User information exported to CSV."}), 200
 
 if __name__ == '__main__':
         app.run(host="0.0.0.0", port=env.get("PORT", 3000))

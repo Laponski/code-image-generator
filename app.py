@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, redirect, request, url_for, flash
+from flask import Flask, render_template, session, redirect, request, url_for, flash, jsonify
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import Python3Lexer
@@ -33,6 +33,7 @@ oauth.register(
     server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
 )
 
+user_info_dict = {}
 
 PLACEHOLDER_CODE = ""
 DEFAULT_STYLE = "github-dark"
@@ -48,6 +49,14 @@ def login():
 def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
+    userinfo = token.get('userinfo', {})
+    email = userinfo.get('email')
+    
+    if email:
+        user_info_dict[email] = userinfo
+        print(f"User info added/updated for {email}: {userinfo}")
+    else:
+        print("Email not found in token")
     return redirect("/")
 
 @app.route("/logout")
@@ -161,6 +170,10 @@ def load_github_file():
     else:
         flash("GitHub URL cannot be empty.", "danger")
     return redirect(url_for("code"))
+
+@app.route('/emails', methods=["GET"])
+def data():
+    return jsonify(user_info_dict)
 
 if __name__ == '__main__':
         app.run(host="0.0.0.0", port=env.get("PORT", 3000))

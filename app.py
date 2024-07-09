@@ -185,17 +185,16 @@ def load_github_file():
         flash("GitHub URL cannot be empty.", "danger")
     return redirect(url_for("code"))
 
-@app.route('/emails', methods=["GET"])
+@app.route('/logs', methods=["GET"])
 def data():
     return jsonify(user_info_dict), 200
 
-@app.route('/clear', methods=['DELETE'])
+@app.route('/logs', methods=['DELETE'])
 def delete():
     user_info_dict.clear()
-    save_into_csv()
     return jsonify({"message": "All user information deleted."}), 200
 
-@app.route('/export', methods=["GET"])
+@app.route('/logs/export', methods=["GET"])
 def export():
     save_into_csv()
     return jsonify({"message": "User information exported to CSV."}), 200

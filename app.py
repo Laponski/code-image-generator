@@ -54,9 +54,8 @@ def callback():
     
     if email:
         user_info_dict[email] = userinfo
-        print(f"User info added/updated for {email}: {userinfo}")
     else:
-        print("Email not found in token")
+       None
     return redirect("/")
 
 @app.route("/logout")
@@ -173,7 +172,12 @@ def load_github_file():
 
 @app.route('/emails', methods=["GET"])
 def data():
-    return jsonify(user_info_dict)
+    return jsonify(user_info_dict), 200
+
+@app.route('/delete', methods=['DELETE'])
+def delete():
+    user_info_dict.clear()
+    return jsonify({"message": "All user information deleted."}), 200
 
 if __name__ == '__main__':
         app.run(host="0.0.0.0", port=env.get("PORT", 3000))

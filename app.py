@@ -9,7 +9,7 @@ from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 
-
+import csv
 import base64
 import requests
 import json
@@ -39,14 +39,20 @@ PLACEHOLDER_CODE = ""
 DEFAULT_STYLE = "github-dark"
 NO_CODE_FALLBACK = "# No Code Entered"
 
-def save_into_file():
-    with open("information.txt", "a") as f:
-        for email, info in user_info_dict.items():
-            f.write(f"Email: {email}\nInfo: {info}\n\n")        
+def save_into_csv():
+    with open('information.csv', mode='w', newline='') as file:
+        fieldnames = ['email', 'given_name', 'family_name', 'nickname', 'picture']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
 
-def clear_file():
-    with open("information.txt", "w") as f:
-        f.write("")
+        writer.writeheader()
+        for email, userinfo in user_info_dict.items():
+            writer.writerow({
+                'email': email,
+                'given_name': userinfo.get('given_name', ''),
+                'family_name': userinfo.get('family_name', ''),
+                'nickname': userinfo.get('nickname', ''),
+                'picture': userinfo.get('picture', '')
+            })
 
 @app.route("/login")
 def login():
@@ -63,7 +69,7 @@ def callback():
     
     if email:
         user_info_dict[email] = userinfo
-        save_into_file()
+        save_into_csv()
     else:
        None
     return redirect("/")
@@ -187,7 +193,7 @@ def data():
 @app.route('/delete', methods=['DELETE'])
 def delete():
     user_info_dict.clear()
-    clear_file()
+    save_into_csv()
     return jsonify({"message": "All user information deleted."}), 200
 
 if __name__ == '__main__':

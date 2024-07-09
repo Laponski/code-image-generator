@@ -22,6 +22,7 @@ This project aims at creating a webstite which can convert your python code into
 - .env
 - .gitignore
 - requirements.txt
+- information.csv
 
 
 ## ⚠️ Requirements

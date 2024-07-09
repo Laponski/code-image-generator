@@ -1,7 +1,7 @@
 
 # From Code to Image
 
-This project aims at creating a webstite which can convert your python code into a nice looking image. You can choose among plenty of the regular vs styles and even load your code from a GitHub repository. 
+This project aims at creating a webstite which can convert your python code into a nice looking image. You can choose among plenty of the regular vs styles and even load your code from a GitHub repository. Additionally there is an authentication system which requires a mail to log in the site. Finally all the infotmation about the user is saved into a csv file which can be accessed with the /export route.
 
 
 

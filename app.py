@@ -39,6 +39,15 @@ PLACEHOLDER_CODE = ""
 DEFAULT_STYLE = "github-dark"
 NO_CODE_FALLBACK = "# No Code Entered"
 
+def save_into_file():
+    with open("information.txt", "a") as f:
+        for email, info in user_info_dict.items():
+            f.write(f"Email: {email}\nInfo: {info}\n\n")        
+
+def clear_file():
+    with open("information.txt", "w") as f:
+        f.write("")
+
 @app.route("/login")
 def login():
     return oauth.auth0.authorize_redirect(
@@ -54,6 +63,7 @@ def callback():
     
     if email:
         user_info_dict[email] = userinfo
+        save_into_file()
     else:
        None
     return redirect("/")
@@ -177,6 +187,7 @@ def data():
 @app.route('/delete', methods=['DELETE'])
 def delete():
     user_info_dict.clear()
+    clear_file()
     return jsonify({"message": "All user information deleted."}), 200
 
 if __name__ == '__main__':

@@ -152,10 +152,18 @@ def image():
     target_url = request.host_url + url_for("style")
     image_bytes = take_screenshot_from_url(target_url, session_data)
     
+    if not image_bytes:
+        flash("Failed to download image!", "error")
+        return render_template("image.html", message="Failed to take screenshot!")
+
+    image_b64 = base64.b64encode(image_bytes).decode("utf-8")
+    
     context = {
         "message": "Done! 🎉",
         "image_b64": base64.b64encode(image_bytes).decode("utf-8"),
     }
+    
+    flash("Image downloaded successfully", "success")
     return render_template("image.html", **context)
 
 @app.route("/load_github_file", methods=["POST"])
